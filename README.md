@@ -23,3 +23,4 @@
 - [OpenWrt](https://github.com/openwrt/openwrt)
 - [Lean's OpenWrt](https://github.com/coolsnowwolf/lede)
 - [ncipollo](https://github.com/ncipollo/release-action)
+- [bin20088](https://github.com/bin20088/Bin)
