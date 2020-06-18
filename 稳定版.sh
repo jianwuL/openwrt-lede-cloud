@@ -8,7 +8,7 @@ sed -i 's/OpenWrt/Bin AutoBuild $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt/g' packag
 git clone https://github.com/tty228/luci-app-serverchan.git package/luci-app-serverchan
 git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
 git clone https://github.com/bin20088/luci-app-koolddns.git package/luci-app-koolddns
-git clone https://github.com/bin20088/luci-theme-butongwifi.git package/luci-theme-butongwifi
+#git clone https://github.com/bin20088/luci-theme-butongwifi.git package/luci-theme-butongwifi
 git clone https://github.com/Repobor/luci-app-koolproxyR.git package/luci-app-koolproxyR
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 #赋予koolddns权限
