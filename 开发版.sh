@@ -9,6 +9,7 @@ git clone https://github.com/lisaac/luci-app-dockerman.git package/openwrt-packa
 svn co https://github.com/Lienol/openwrt-package/trunk/package/brook package/openwrt-packages/brook
 svn co https://github.com/Lienol/openwrt-package/trunk/package/chinadns-ng package/openwrt-packages/chinadns-ng
 svn co https://github.com/Lienol/openwrt-package/trunk/package/tcping package/openwrt-packages/tcping
+svn co https://github.com/Lienol/openwrt-package/trunk/package/trojan-go package/openwrt-packages/trojan-go
 svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-app-passwall package/openwrt-packages/luci-app-passwall
 git clone https://github.com/tty228/luci-app-serverchan.git package/openwrt-packages/luci-app-serverchan
 git clone https://github.com/bin20088/luci-theme-argon-mc.git package/openwrt-packages/luci-theme-argon-mc
