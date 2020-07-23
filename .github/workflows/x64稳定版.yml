@@ -63,7 +63,7 @@ jobs:
         ./scripts/feeds install -a
         useVersionInfo=$(git show -s --date=short --format="编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录:<br/>更新人: %an<br/>更新时间: %cd<br/>更新内容: %s<br/>哈希值: %H")
         echo "::set-env name=useVersionInfo::$useVersionInfo"
-        echo "::set-env name=DATE::$(date "+%Y-%m-%d·%H:%M:%S")"
+        echo "::set-env name=DATE::$(date "+%Y-%m-%d %H:%M:%S")"
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
@@ -99,12 +99,12 @@ jobs:
       id: organize
       if: steps.compile.outputs.status == 'success' && !cancelled()
       run: |
-        echo "${{ env.useVersionInfo }}" > openwrt/bin/targets/x86/64/${{ env.DATE }}更新说明.md
+        echo "${{ env.useVersionInfo }}" > openwrt/bin/targets/x86/64/更新说明.md
         rm -rf openwrt/bin/targets/x86/64/packages
         tar -zcvf bin.tar.gz openwrt/bin/targets/x86/64
         cp bin.tar.gz ./openwrt/bin/targets/x86/64/bin.tar.gz
         cd openwrt/bin/targets/*/*
-        rm -rf ${{ env.DATE }}更新说明.md
+        rm -rf 更新说明.md
         bzip2 *.img
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
