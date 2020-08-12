@@ -8,7 +8,7 @@ sed -i 's/OpenWrt/$(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt/g' package/lean/default
 git clone https://github.com/lisaac/luci-app-dockerman.git package/openwrt-packages/luci-app-dockerman
 svn co https://github.com/Lienol/openwrt-package/trunk/package/brook package/openwrt-packages/brook
 svn co https://github.com/Lienol/openwrt-package/trunk/package/chinadns-ng package/openwrt-packages/chinadns-ng
-svn co https://github.com/Lienol/openwrt-package/trunk/package/tcping package/openwrt-packages/tcping
+#svn co https://github.com/Lienol/openwrt-package/trunk/package/tcping package/openwrt-packages/tcping
 svn co https://github.com/Lienol/openwrt-package/trunk/package/trojan-go package/openwrt-packages/trojan-go
 svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-app-passwall package/openwrt-packages/luci-app-passwall
 git clone https://github.com/tty228/luci-app-serverchan.git package/openwrt-packages/luci-app-serverchan
@@ -18,7 +18,7 @@ git clone https://github.com/bin20088/luci-theme-butongwifi.git package/openwrt-
 git clone https://github.com/openwrt-develop/luci-theme-atmaterial.git package/openwrt-packages/luci-theme-atmaterial
 git clone https://github.com/Repobor/luci-app-koolproxyR.git package/openwrt-packages/luci-app-koolproxyR
 git clone https://github.com/bin20088/luci-app-koolddns.git package/openwrt-packages/luci-app-koolddns
-svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/openwrt-packages/luci-app-ssr-plus
+git clone https://github.com/fw876/helloworld.git package/openwrt-packages/helloworld
 svn co https://github.com/0saga0/OpenClash/trunk/luci-app-openclash package/openwrt-packages/luci-app-openclash
 svn co https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/openwrt-packages/luci-theme-infinityfreedom
 #赋予koolddns权限
