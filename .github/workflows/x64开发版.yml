@@ -7,9 +7,9 @@ on:
 #    types: published
 #  push:
 #    branches:
-#      - master
+#      - main
 #    paths:
-#      - 'x64开发版.config'
+#      - 'x64.config'
   schedule:
     - cron: 00 18 * * *
 #  watch:
@@ -18,8 +18,8 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: x64开发版.config
-  DIY_SH: 开发版.sh
+  CONFIG_FILE: x64.config
+  DIY_SH: bin.sh
   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: false
@@ -39,7 +39,7 @@ jobs:
       run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.FILE_NAME }}开始编译
       
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@main
 
     - name: Initialization environment
       env:
@@ -63,7 +63,8 @@ jobs:
         ./scripts/feeds install -a
         useVersionInfo=$(git show -s --date=short --format="编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录:<br/>更新人: %an<br/>更新时间: %cd<br/>更新内容: %s<br/>哈希值: %H")
         echo "::set-env name=useVersionInfo::$useVersionInfo"
-        echo "::set-env name=DATE::$(date "+%Y-%m-%d·%H:%M:%S")"
+        echo "::set-env name=DATE::$(date "+%Y-%m-%d-%H:%M:%S")"
+        echo "::set-env name=DATE1::$(date "+%Y.%m.%d")"
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
@@ -71,8 +72,16 @@ jobs:
         chmod +x $DIY_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_SH
+        sed -i 's/OpenWrt/Bin AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
+        sed -i '/openwrt_luci/ { s/sed/#sed/g; }' package/lean/default-settings/files/zzz-default-settings
+        sed -i 's|openwrt.proxy.ustclug.org|256pd.top:9666/开发版/x64|g' package/lean/default-settings/files/zzz-default-settings
+        sed -i '/downloads/ { s/s\//s|/g; }' package/lean/default-settings/files/zzz-default-settings
+        sed -i '/downloads/ { s/org\//org|/g; }' package/lean/default-settings/files/zzz-default-settings
+        sed -i '/downloads/ { s/x64\//x64|/g; }' package/lean/default-settings/files/zzz-default-settings
+        sed -i 's/http:/snapshots/' package/lean/default-settings/files/zzz-default-settings
+        sed -i 's/https:/bin/g' package/lean/default-settings/files/zzz-default-settings
     - name: SSH connection to Actions
-      uses: P3TERX/debugger-action@master
+      uses: P3TERX/debugger-action@main
       if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'sshkx64')
 
     - name: Download package
@@ -98,6 +107,7 @@ jobs:
       id: organize
       if: steps.compile.outputs.status == 'success' && !cancelled()
       run: |
+        echo "${{ env.useVersionInfo }}" > openwrt/bin/${{ env.DATE }}更新说明.md
         tar -zcvf bin.tar.gz openwrt/bin
         cp bin.tar.gz ./openwrt/bin/targets/x86/64/bin.tar.gz
         cd openwrt/bin/targets/x86/64
@@ -106,14 +116,14 @@ jobs:
         echo "::set-env name=FIRMWARE::$PWD"
         echo "::set-output name=status::success"
     - name: Upload bin directory
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true' && !cancelled()
       with:
         name: OpenWrt-kx64
         path: ${{ env.FIRMWARE }}
 
     - name: Upload firmware directory
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@main
       if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: kx64
