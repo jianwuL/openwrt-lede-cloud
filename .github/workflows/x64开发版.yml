@@ -11,7 +11,7 @@ on:
 #    paths:
 #      - 'x64.config'
   schedule:
-    - cron: 00 18 * * *
+    - cron: 00 17 * * *
 #  watch:
 #    types: started
 
@@ -21,7 +21,7 @@ env:
   CONFIG_FILE: x64.config
   DIY_SH: bin.sh
   SSH_ACTIONS: false
-  UPLOAD_BIN_DIR: false
+  UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: false
   UPLOAD_RELEASE: true
   UPLOAD_WETRANSFER: false
@@ -72,7 +72,6 @@ jobs:
         chmod +x $DIY_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_SH
-        sed -i 's/OpenWrt/Bin AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
         sed -i '/openwrt_luci/ { s/sed/#sed/g; }' package/lean/default-settings/files/zzz-default-settings
         sed -i 's|openwrt.proxy.ustclug.org|256pd.top:9666/开发版/x64|g' package/lean/default-settings/files/zzz-default-settings
         sed -i '/downloads/ { s/s\//s|/g; }' package/lean/default-settings/files/zzz-default-settings
@@ -120,7 +119,7 @@ jobs:
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true' && !cancelled()
       with:
         name: OpenWrt-kx64
-        path: ${{ env.FIRMWARE }}
+        path: /openwrt/bin/targets/x86/64/bin.tar.gz
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
