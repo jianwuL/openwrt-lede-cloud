@@ -59,6 +59,7 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
         cd openwrt
+        sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         useVersionInfo=$(git show -s --date=short --format="编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录:<br/>更新人: %an<br/>更新时间: %cd<br/>更新内容: %s<br/>哈希值: %H")
@@ -72,6 +73,7 @@ jobs:
         chmod +x $DIY_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_SH
+        sed -i 's/OpenWrt/Bin AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
         sed -i '/openwrt_luci/ { s/sed/#sed/g; }' package/lean/default-settings/files/zzz-default-settings
         sed -i 's|openwrt.proxy.ustclug.org|256pd.top:9666/开发版/x64|g' package/lean/default-settings/files/zzz-default-settings
         sed -i '/downloads/ { s/s\//s|/g; }' package/lean/default-settings/files/zzz-default-settings
@@ -119,7 +121,7 @@ jobs:
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true' && !cancelled()
       with:
         name: OpenWrt-kx64
-        path: /openwrt/bin/targets/x86/64/bin.tar.gz
+        path: openwrt/bin/targets/x86/64/bin.tar.gz
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
