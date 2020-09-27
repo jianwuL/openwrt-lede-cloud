@@ -18,7 +18,6 @@ svn co https://github.com/siropboy/mypackages/trunk/luci-app-autopoweroff packag
 svn co https://github.com/siropboy/mypackages/trunk/luci-app-control-timewol package/openwrt-packages/luci-app-control-timewol
 git clone https://github.com/tty228/luci-app-serverchan.git package/openwrt-packages/luci-app-serverchan
 git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/openwrt-packages/luci-app-jd-dailybonus
-git clone https://github.com/jerrykuku/node-request.git package/openwrt-packages/node-request
 git clone https://github.com/bin20088/luci-theme-argon-mc.git package/openwrt-packages/luci-theme-argon-mc
 git clone https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/openwrt-packages/luci-theme-opentomcat
 git clone https://github.com/bin20088/luci-theme-butongwifi.git package/openwrt-packages/luci-theme-butongwifi
@@ -28,6 +27,7 @@ git clone https://github.com/bin20088/luci-app-koolddns.git package/openwrt-pack
 git clone https://github.com/tuanqing/install-program package/openwrt-packages/install-program
 svn co https://github.com/0saga0/OpenClash/trunk/luci-app-openclash package/openwrt-packages/luci-app-openclash
 svn co https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/openwrt-packages/luci-theme-infinityfreedom
+sed -i 's/e5d6603454622e1f466c4c20061992046124fc7c/f289d8d85ab0851851a6e3c101226e77bed0052fd60f9185df8852b601e657f8/g' package/lean/v2ray/Makefile
 
 #赋予koolddns权限
 chmod 0755 package/openwrt-packages/luci-app-koolddns/root/etc/init.d/koolddns
