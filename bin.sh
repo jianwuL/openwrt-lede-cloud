@@ -5,6 +5,8 @@
 #sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 #修改主机名
 sed -i 's/OpenWrt/Bin-Lean/g' package/base-files/files/bin/config_generate
+#关闭自建私有源签名验证
+sed -i '92d' package/system/opkg/Makefile
 
 #添加额外软件包
 git clone https://github.com/lisaac/luci-app-dockerman.git package/openwrt-packages/luci-app-dockerman
@@ -27,11 +29,6 @@ git clone https://github.com/bin20088/luci-app-koolddns.git package/openwrt-pack
 git clone https://github.com/tuanqing/install-program package/openwrt-packages/install-program
 svn co https://github.com/0saga0/OpenClash/trunk/luci-app-openclash package/openwrt-packages/luci-app-openclash
 svn co https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/openwrt-packages/luci-theme-infinityfreedom
-sed -i 's/e5d6603454622e1f466c4c20061992046124fc7c/f289d8d85ab0851851a6e3c101226e77bed0052fd60f9185df8852b601e657f8/g' package/lean/v2ray/Makefile
-
-#赋予koolddns权限
-chmod 0755 package/openwrt-packages/luci-app-koolddns/root/etc/init.d/koolddns
-chmod 0755 package/openwrt-packages/luci-app-koolddns/root/usr/share/koolddns/aliddns
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
